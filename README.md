@@ -2,7 +2,7 @@
 
 A screenshot analysis and triage system that helps you manage, organize, and extract information from your screenshots. This tool uses OCR (Optical Character Recognition) to extract text from images, and provides a web interface for easy management.
 
-![Demo](./screenshots/demo.gif)
+![Demo](./.github/assets/demo.gif)
 
 ## Features
 
@@ -153,7 +153,7 @@ To create a demo GIF for documentation:
 2. Use ffmpeg to convert the video to an optimized GIF:
 
 ```bash
-ffmpeg -i input_video.mp4 -vf "fps=10,scale=800:-1:flags=lanczos" -c:v gif -f gif ./screenshots/demo.gif
+ffmpeg -i input_video.mp4 -vf "fps=10,scale=800:-1:flags=lanczos" -c:v gif -f gif ./.github/assets/demo.gif
 ```
 
 This command:
