@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Privacy Policy</h1>
+    
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h3>Temporary Data Storage</h3>
+            <p>
+                Nora is designed with privacy as a core principle. We've implemented a privacy-first approach 
+                that ensures your screenshots are only processed temporarily and not stored permanently.
+            </p>
+            
+            <h4 class="mt-4">How Your Data Is Handled</h4>
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item">
+                    <i data-feather="check" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                    All screenshots are stored only in your browser session
+                </li>
+                <li class="list-group-item">
+                    <i data-feather="check" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                    When your session ends (browser tab closed), all data is automatically deleted
+                </li>
+                <li class="list-group-item">
+                    <i data-feather="check" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                    No screenshot data is stored in a central database
+                </li>
+                <li class="list-group-item">
+                    <i data-feather="check" class="text-success me-2" style="width: 16px; height: 16px;"></i>
+                    You can manually clear all session data at any time
+                </li>
+            </ul>
+            
+            <h4>Technical Implementation</h4>
+            <p>
+                When you upload a screenshot, our system:
+            </p>
+            <ol>
+                <li>Processes the image in temporary storage to extract and analyze text</li>
+                <li>Calculates priority scores based on content analysis</li>
+                <li>Stores this information in your browser session only</li>
+                <li>Automatically removes all data when your session expires</li>
+            </ol>
+            
+            <div class="alert alert-info">
+                <h5 class="alert-heading"><i data-feather="info" class="me-2"></i> Important</h5>
+                <p class="mb-0">
+                    Because all data is session-based, dismissed screenshots can only be restored within 
+                    the same browser session. Once you close your browser tab, all data is permanently deleted.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3>Manual Data Cleanup</h3>
+            <p>
+                You can manually clear all your session data at any time by clicking the 
+                "Clear Session Data" button in the top menu. This will immediately remove
+                all screenshots and related data from your session.
+            </p>
+            
+            <div class="d-flex justify-content-center mt-4">
+                <button id="privacy-cleanup-btn" class="btn btn-outline-primary">
+                    <i data-feather="shield" class="me-1"></i> Clear All My Session Data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize feather icons
+    feather.replace();
+    
+    // Handle cleanup button
+    const cleanupBtn = document.getElementById('privacy-cleanup-btn');
+    if (cleanupBtn) {
+        cleanupBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all your session data? This will remove all your screenshots and cannot be undone.')) {
+                // Show loading indicator
+                const btnText = cleanupBtn.innerHTML;
+                cleanupBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Clearing data...';
+                cleanupBtn.disabled = true;
+                
+                // Call the API to clean up session data
+                fetch('/api/cleanup-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Your session data has been cleared successfully.');
+                        window.location.href = '/';
+                    } else {
+                        alert(data.message || 'Failed to clear session data');
+                        cleanupBtn.innerHTML = btnText;
+                        cleanupBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error cleaning up session:', error);
+                    alert('Failed to clear session data');
+                    cleanupBtn.innerHTML = btnText;
+                    cleanupBtn.disabled = false;
+                });
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

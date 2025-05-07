@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- Action Buttons (positioned at top right) -->
+<div class="d-flex justify-content-end mb-3 gap-2">
+    <button id="restore-all-btn" class="btn btn-outline-primary btn-sm" type="button">
+        <i data-feather="refresh-cw" class="me-1"></i> Restore All Dismissed
+    </button>
+    <button id="clear-all-btn" class="btn btn-outline-danger btn-sm" type="button">
+        <i data-feather="trash-2" class="me-1"></i> Clear All Screenshots
+    </button>
+    <button id="cleanup-session-btn" class="btn btn-outline-secondary btn-sm" type="button">
+        <i data-feather="shield" class="me-1"></i> Clear Session Data
+    </button>
+</div>
+
+<!-- File Upload Section -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body p-4">
+        <form id="upload-form" enctype="multipart/form-data" class="mb-0">
+            <div class="mb-3">
+                <label for="screenshot-upload" class="form-label">Upload Screenshots</label>
+                <input class="form-control" type="file" id="screenshot-upload" name="screenshots[]" multiple accept="image/*">
+                <div class="form-text">Select multiple image files to analyze and prioritize</div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i data-feather="upload" class="me-1"></i> Upload & Process
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Loading Indicator -->
+<div id="loading-indicator" class="text-center my-5 d-none">
+    <div class="spinner-border loading-spinner text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Processing your screenshots...</p>
+</div>
+
+<!-- No Screenshots Message -->
+<div id="no-screenshots-message" class="empty-state">
+    <div class="empty-state-icon">
+        <i data-feather="image"></i>
+    </div>
+    <h3>No Screenshots Yet</h3>
+    <p class="text-muted">
+        Upload screenshots using the form above to get started
+    </p>
+</div>
+
+<!-- All Done Message -->
+<div id="all-done-message" class="empty-state d-none">
+    <div class="empty-state-icon text-success">
+        <i data-feather="check-circle"></i>
+    </div>
+    <h3>All Done!</h3>
+    <p class="text-muted">
+        You've processed all your screenshots.
+    </p>
+    <div class="mt-4 d-flex justify-content-center gap-2 flex-wrap">
+        <button class="btn btn-outline-primary" type="button" onclick="document.querySelector('.card').style.display = 'block';">
+            <i data-feather="upload" class="me-1"></i> Upload More Screenshots
+        </button>
+        <button id="restore-all-btn" class="btn btn-outline-secondary" type="button">
+            <i data-feather="refresh-cw" class="me-1"></i> Restore All Dismissed
+        </button>
+    </div>
+</div>
+
+<!-- Screenshot Carousel -->
+<div id="screenshot-carousel" class="carousel slide position-relative d-none">
+    <!-- Carousel Hint -->
+    <div class="carousel-hint">
+        <div class="d-flex align-items-center mb-1">
+            <i data-feather="check" class="me-1" style="width: 14px; height: 14px;"></i> 
+            <span>Press <kbd>E</kbd> to dismiss</span>
+        </div>
+        <div class="d-flex align-items-center mb-1">
+            <i data-feather="clock" class="me-1" style="width: 14px; height: 14px;"></i> 
+            <span>Press <kbd>H</kbd> to hold for later</span>
+        </div>
+        <div class="d-flex align-items-center">
+            <i data-feather="rotate-ccw" class="me-1" style="width: 14px; height: 14px;"></i> 
+            <span>Press <kbd>Z</kbd> to undo last action</span>
+        </div>
+    </div>
+    
+    <div class="carousel-inner">
+        <!-- Screenshots will be dynamically added here by JavaScript -->
+    </div>
+    
+    <!-- Navigation removed as requested -->
+</div>
+
+<!-- Action Buttons -->
+<div class="action-buttons d-none" id="action-buttons">
+    <div class="text-center me-auto">
+        <span id="screenshot-counter" class="badge bg-light text-dark shadow-sm">0 of 0</span>
+    </div>
+    
+    <button id="dismiss-btn" class="btn btn-danger shadow-sm">
+        <i data-feather="check" class="me-1"></i> Complete & Dismiss <small class="ms-1 opacity-75">(<kbd>E</kbd>)</small>
+    </button>
+    
+    <div class="dropdown">
+        <button class="btn btn-info text-white shadow-sm dropdown-toggle" type="button" id="defer-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i data-feather="clock" class="me-1"></i> Remind Me Later <small class="ms-1 opacity-75">(<kbd>H</kbd>)</small>
+        </button>
+        <ul id="defer-dropdown-menu" class="dropdown-menu shadow" aria-labelledby="defer-dropdown">
+            <!-- Options will be dynamically added by JavaScript -->
+        </ul>
+    </div>
+    
+    <button id="undo-btn" class="btn btn-secondary shadow-sm">
+        <i data-feather="rotate-ccw" class="me-1"></i> Undo <small class="ms-1 opacity-75">(<kbd>Z</kbd>)</small>
+    </button>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/smooth-transitions.js"></script>
+<script src="/static/js/carousel.js"></script>
+{% endblock %}

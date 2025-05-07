@@ -1,0 +1,291 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="page-title">Settings</h1>
+<p class="page-subtitle mb-4">Configure your Screenshot Triage System</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="settings-card mb-4">
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <div class="rounded-circle bg-primary bg-opacity-10 p-2">
+                        <i data-feather="folder" class="text-primary"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0">Screenshot Folders</h3>
+            </div>
+            
+            <p class="text-muted">Screenshots are automatically collected from these folders:</p>
+            
+            <ul class="list-group list-group-flush mt-3 mb-3 shadow-sm">
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Screenshots Folder:</strong>
+                            <code class="bg-light rounded px-2 py-1">{{ config.SCREENSHOTS_FOLDER }}</code>
+                        </div>
+                        <span class="badge bg-success">Active</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Documents Folder:</strong>
+                            <code class="bg-light rounded px-2 py-1">{{ config.DOCUMENTS_FOLDER }}</code>
+                        </div>
+                        <span class="badge bg-success">Active</span>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="alert alert-info">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i data-feather="info"></i>
+                    </div>
+                    <div>
+                        <strong>Folder Configuration</strong>
+                        <p class="mb-0">Folder locations can be changed by setting the <code>SCREENSHOTS_FOLDER</code> and <code>DOCUMENTS_FOLDER</code> environment variables.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-card">
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <div class="rounded-circle bg-info bg-opacity-10 p-2">
+                        <i data-feather="sliders" class="text-info"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0">Priority Scoring</h3>
+            </div>
+            
+            <p class="text-muted">Screenshots are automatically prioritized based on the following criteria:</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-2 me-2">
+                                    <i data-feather="alert-circle" class="text-warning"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Urgency Score (60%)</h5>
+                            </div>
+                            <p class="card-text">Based on time-sensitive content, such as:</p>
+                            <ul class="list-unstyled">
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Today/tomorrow mentions</li>
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Dates and deadlines</li>
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Words like "urgent", "asap", etc.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-2 me-2">
+                                    <i data-feather="target" class="text-info"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Actionability (40%)</h5>
+                            </div>
+                            <p class="card-text">Based on action-oriented content, such as:</p>
+                            <ul class="list-unstyled">
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Action verbs (apply, submit, call)</li>
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Phrases like "don't forget to", "need to"</li>
+                                <li><i data-feather="check" class="text-success me-2" style="width: 16px;"></i>Direct instructions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="settings-card">
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <div class="rounded-circle bg-primary bg-opacity-10 p-2">
+                        <i data-feather="info" class="text-primary"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0">About</h3>
+            </div>
+            
+            <p>Screenshot Triage System is a tool to help you prioritize and manage screenshots containing important information and to-dos.</p>
+            
+            <h5 class="mt-4 mb-3">How it works:</h5>
+            <div class="card shadow-sm border-0 bg-light mb-4">
+                <div class="card-body">
+                    <ol class="mb-0">
+                        <li class="mb-2">Save screenshots to your designated folders</li>
+                        <li class="mb-2">Click "Scan for New Screenshots" on the home page</li>
+                        <li class="mb-2">The system analyzes the text in each screenshot</li>
+                        <li class="mb-2">Screenshots are prioritized by urgency and actionability</li>
+                        <li class="mb-2">Review your screenshots in order of importance</li>
+                        <li>Dismiss completed items or defer them for later</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i data-feather="alert-triangle"></i>
+                    </div>
+                    <div>
+                        <strong>System Requirement</strong>
+                        <p class="mb-0">This system requires <strong>Tesseract OCR</strong> to be installed on your system for text extraction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-card">
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <div class="rounded-circle bg-primary bg-opacity-10 p-2">
+                        <i data-feather="database" class="text-primary"></i>
+                    </div>
+                </div>
+                <h3 class="mb-0">Data Management</h3>
+            </div>
+            
+            <p class="text-muted">Your screenshot data is stored using temporary session storage.</p>
+            
+            <button id="rescan-btn" class="btn btn-primary shadow-sm mt-3 w-100 mb-3" onclick="window.location.href='/';">
+                <i data-feather="refresh-cw" class="me-2"></i>
+                Scan for New Screenshots
+            </button>
+            
+            <button id="clear-session-btn" class="btn btn-outline-warning shadow-sm w-100">
+                <i data-feather="trash-2" class="me-2"></i>
+                Clear Session Data
+            </button>
+            
+            <div id="clear-session-message" class="d-none alert mt-3">
+                <!-- Message content will be filled by JavaScript -->
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="d-flex align-items-center mb-3">
+                <div class="me-3">
+                    <div class="rounded-circle bg-danger bg-opacity-10 p-2">
+                        <i data-feather="alert-triangle" class="text-danger"></i>
+                    </div>
+                </div>
+                <h5 class="mb-0">Advanced Options</h5>
+            </div>
+            
+            <div class="alert alert-danger">
+                <small><strong>Warning:</strong> These actions are destructive and cannot be undone!</small>
+            </div>
+            
+            <button id="reset-all-btn" class="btn btn-outline-danger shadow-sm w-100 mb-2">
+                <i data-feather="delete" class="me-2"></i>
+                Reset All Data
+            </button>
+            
+            <div id="reset-all-message" class="d-none alert mt-2 mb-3">
+                <!-- Message content will be filled by JavaScript -->
+            </div>
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear session data functionality
+            const clearSessionBtn = document.getElementById('clear-session-btn');
+            const clearSessionMsg = document.getElementById('clear-session-message');
+            
+            clearSessionBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear your session data? This will remove all screenshots from the current session.')) {
+                    clearSessionBtn.disabled = true;
+                    clearSessionBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Clearing...';
+                    
+                    fetch('/api/cleanup-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        clearSessionMsg.classList.remove('d-none', 'alert-success', 'alert-danger');
+                        if (data.success) {
+                            clearSessionMsg.classList.add('alert-success');
+                            clearSessionMsg.textContent = data.message;
+                            // Reload the page after a short delay
+                            setTimeout(() => {
+                                window.location.href = '/';
+                            }, 1500);
+                        } else {
+                            clearSessionMsg.classList.add('alert-danger');
+                            clearSessionMsg.textContent = data.message || 'Failed to clear session data';
+                            clearSessionBtn.disabled = false;
+                            clearSessionBtn.innerHTML = '<i data-feather="trash-2" class="me-2"></i> Clear Session Data';
+                            feather.replace();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        clearSessionMsg.classList.remove('d-none', 'alert-success');
+                        clearSessionMsg.classList.add('alert-danger');
+                        clearSessionMsg.textContent = 'An error occurred while clearing session data';
+                        clearSessionBtn.disabled = false;
+                        clearSessionBtn.innerHTML = '<i data-feather="trash-2" class="me-2"></i> Clear Session Data';
+                        feather.replace();
+                    });
+                }
+            });
+            
+            // Reset all data functionality
+            const resetAllBtn = document.getElementById('reset-all-btn');
+            const resetAllMsg = document.getElementById('reset-all-message');
+            
+            resetAllBtn.addEventListener('click', function() {
+                if (confirm('WARNING: This will delete ALL data in the database and reset the application. This action cannot be undone. Are you absolutely sure?')) {
+                    if (prompt('Type "DELETE EVERYTHING" to confirm this destructive action:') === 'DELETE EVERYTHING') {
+                        resetAllBtn.disabled = true;
+                        resetAllBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Resetting...';
+                        
+                        // First try to use the dedicated API endpoint
+                        fetch('/api/cleanup-session', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            resetAllMsg.classList.remove('d-none', 'alert-success', 'alert-danger');
+                            resetAllMsg.classList.add('alert-success');
+                            resetAllMsg.textContent = "Data has been reset";
+                            
+                            // Reload the page after a short delay
+                            setTimeout(() => {
+                                window.location.href = '/';
+                            }, 1500);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            resetAllMsg.classList.remove('d-none', 'alert-success');
+                            resetAllMsg.classList.add('alert-danger');
+                            resetAllMsg.textContent = 'An error occurred while resetting data';
+                            resetAllBtn.disabled = false;
+                            resetAllBtn.innerHTML = '<i data-feather="delete" class="me-2"></i> Reset All Data';
+                            feather.replace();
+                        });
+                    }
+                }
+            });
+        });
+        </script>
+    </div>
+</div>
+{% endblock %}
